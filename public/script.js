@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 3. LOGIKA BACKEND (JANGAN DIUBAH BAGIAN FETCH) ---
+    // --- 3. LOGIKA BACKEND (TIDAK DIUBAH, SESUAI PERINTAH) ---
     uploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorMsg.classList.add('hidden');
 
         try {
-            // === KONEKSI KE BACKEND ASLI (TIDAK DIUBAH) ===
+            // === KONEKSI KE BACKEND ASLI (AMAN) ===
             const response = await fetch('/api/upscale', {
                 method: 'POST',
                 body: formData
