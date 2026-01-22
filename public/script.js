@@ -1,30 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Elements (Updated references for new modal structure) ---
+    // --- Elements for Upload Functionality ---
     const triggerButtons = document.querySelectorAll('.trigger-upload-btn');
     const fileInput = document.getElementById('fileInput');
     const uploadOverlay = document.getElementById('uploadOverlay');
     const closeOverlayBtn = document.getElementById('closeOverlayBtn');
     const uploadForm = document.getElementById('uploadForm');
     
-    // Editor UI Elements
-    const loadingDiv = document.getElementById('loading');
+    // Modal elements
+    const previewArea = document.getElementById('previewArea');
+    const imagePreview = document.getElementById('imagePreview');
+    const controlsArea = document.getElementById('controlsArea');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // States elements
+    const loading = document.getElementById('loading');
+    const resultDiv = document.getElementById('result');
+    const resultImage = document.getElementById('resultImage');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
     const errorMsg = document.getElementById('errorMsg');
-    const editorContent = document.getElementById('editorContent');
-    const editorAfterImg = document.getElementById('editorAfterImg');
-    const editorBeforeImg = document.getElementById('editorBeforeImg');
-    // Note: Resolution labels are static for now as backend doesn't return res
-    // const resAfterLabel = document.getElementById('resAfterLabel'); 
-    // const resBeforeLabel = document.getElementById('resBeforeLabel');
-    const downloadBtnHeader = document.getElementById('downloadBtnHeader');
-    const retryBtn = document.getElementById('retryBtn');
 
+    // --- 1. UPLOAD LOGIC (Existing Code) ---
 
-    // --- Event Listeners ---
-
-    triggerButtons.forEach(btn => btn.addEventListener('click', () => fileInput.click()));
+    triggerButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            fileInput.click();
+        });
+    });
 
     fileInput.addEventListener('change', (e) => {
-        if (fileInput.files.length) handleFile(fileInput.files[0]);
+        if (fileInput.files.length) {
+            handleFile(fileInput.files[0]);
+        }
     });
 
     function handleFile(file) {
@@ -32,44 +39,36 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Harap upload file gambar (JPG, PNG, HEIC).');
             return;
         }
-        
-        // Reset state & show modal
-        uploadOverlay.classList.remove('hidden');
-        editorContent.classList.add('hidden');
-        errorMsg.classList.add('hidden');
-        loadingDiv.classList.remove('hidden'); // Start showing loading immediately
-        downloadBtnHeader.classList.add('hidden');
-
-        // Set "Before" image
+        resetModalState();
         const reader = new FileReader();
         reader.onload = (e) => {
-            editorBeforeImg.src = e.target.result;
-            // Auto-submit form after file is read
-            uploadForm.dispatchEvent(new Event('submit'));
+            imagePreview.src = e.target.result;
+            previewArea.style.display = 'block';
+            controlsArea.style.display = 'block';
+            uploadOverlay.classList.remove('hidden');
         };
         reader.readAsDataURL(file);
     }
 
     closeOverlayBtn.addEventListener('click', () => {
         uploadOverlay.classList.add('hidden');
-        fileInput.value = '';
-        resetEditorState();
+        fileInput.value = ''; 
     });
 
-    retryBtn.addEventListener('click', () => {
-        fileInput.click(); // Simple retry logic: pick file again
+    resetBtn.addEventListener('click', () => {
+        resetModalState();
+        fileInput.click();
     });
 
-    function resetEditorState() {
-        loadingDiv.classList.add('hidden');
-        editorContent.classList.add('hidden');
+    function resetModalState() {
+        previewArea.style.display = 'none';
+        controlsArea.style.display = 'none';
+        loading.classList.add('hidden');
+        resultDiv.classList.add('hidden');
         errorMsg.classList.add('hidden');
-        downloadBtnHeader.classList.add('hidden');
-        editorAfterImg.src = '';
-        editorBeforeImg.src = '';
+        submitBtn.disabled = false;
     }
 
-    // --- Handle Form Submit (Backend Interaction - Core Logic Unchanged) ---
     uploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -78,35 +77,90 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const formData = new FormData();
         formData.append('image', file);
-        // Scale is fixed to 4 in hidden input
-        formData.append('scale', document.getElementById('scale').value); 
+        formData.append('scale', document.getElementById('scale').value);
 
-        // UI Updates: Ensure loading is shown
-        loadingDiv.classList.remove('hidden');
-        editorContent.classList.add('hidden');
+        submitBtn.disabled = true;
+        controlsArea.style.display = 'none';
+        loading.classList.remove('hidden');
         errorMsg.classList.add('hidden');
-        downloadBtnHeader.classList.add('hidden');
 
         try {
-            const response = await fetch('/api/upscale', { method: 'POST', body: formData });
-            const data = await response.json();
+            // Simulated Backend Call (Replace with real Fetch)
+            // const response = await fetch('/api/upscale', { method: 'POST', body: formData });
+            // const data = await response.json();
+            
+            // Simulation for Demo purposes:
+            await new Promise(r => setTimeout(r, 2000)); 
+            const data = { success: true, url: URL.createObjectURL(file) }; // Just echoing back for demo
 
             if (!data.success) throw new Error(data.error || 'Gagal memproses gambar.');
 
-            // Success: Show editor content
-            editorAfterImg.src = data.url;
-            downloadBtnHeader.href = data.url;
-            downloadBtnHeader.classList.remove('hidden');
-            editorContent.classList.remove('hidden');
-            loadingDiv.classList.add('hidden');
-            
-            // (Optional) Update resolution labels here if backend provided them
-            // resAfterLabel.textContent = `Setelah ${data.width}x${data.height}`;
+            resultImage.src = data.url;
+            downloadBtn.href = data.url;
+            resultDiv.classList.remove('hidden');
 
         } catch (error) {
             errorMsg.textContent = error.message;
             errorMsg.classList.remove('hidden');
-            loadingDiv.classList.add('hidden');
+            controlsArea.style.display = 'block';
+        } finally {
+            loading.classList.add('hidden');
+            submitBtn.disabled = false;
         }
+    });
+
+    // --- 2. COMPARISON SLIDER LOGIC (NEW UPDATE) ---
+    
+    const sliderContainer = document.getElementById('comparisonSlider');
+    const beforeWrapper = document.getElementById('beforeWrapper');
+    const handle = document.getElementById('scrollerHandle');
+    
+    let isDragging = false;
+
+    // Helper to calculate and apply position
+    const moveSlider = (xPosition) => {
+        let containerRect = sliderContainer.getBoundingClientRect();
+        
+        // Menghitung posisi relatif kursor terhadap container
+        let offsetX = xPosition - containerRect.left;
+        
+        // Batasi agar tidak keluar container
+        if (offsetX < 0) offsetX = 0;
+        if (offsetX > containerRect.width) offsetX = containerRect.width;
+
+        // Hitung persentase
+        const percentage = (offsetX / containerRect.width) * 100;
+
+        // Terapkan ke lebar overlay dan posisi handle
+        beforeWrapper.style.width = percentage + "%";
+        handle.style.left = percentage + "%";
+    };
+
+    // Mouse Events
+    sliderContainer.addEventListener('mousedown', () => isDragging = true);
+    window.addEventListener('mouseup', () => isDragging = false);
+    
+    sliderContainer.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        moveSlider(e.clientX);
+    });
+
+    // Touch Events (HP)
+    sliderContainer.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        // Pindahkan langsung saat tap pertama
+        moveSlider(e.touches[0].clientX);
+    }, {passive: true}); // Passive true for better scroll performance check
+
+    window.addEventListener('touchend', () => isDragging = false);
+    
+    sliderContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        moveSlider(e.touches[0].clientX);
+    }, {passive: false}); // Prevent default scrolling when dragging slider
+
+    // Click to jump (Optional, for UX)
+    sliderContainer.addEventListener('click', (e) => {
+        moveSlider(e.clientX);
     });
 });
