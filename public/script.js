@@ -3,35 +3,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const triggerButtons = document.querySelectorAll('.trigger-upload-btn');
     const fileInput = document.getElementById('fileInput');
     
-    // Overlay & Modal elements
+    // Editor Page elements
     const uploadOverlay = document.getElementById('uploadOverlay');
     const closeOverlayBtn = document.getElementById('closeOverlayBtn');
     const uploadForm = document.getElementById('uploadForm');
     
-    // Inside Modal elements
+    // Inside Editor
     const previewArea = document.getElementById('previewArea');
     const imagePreview = document.getElementById('imagePreview');
-    const controlsArea = document.getElementById('controlsArea');
+    const controlsArea = document.getElementById('controlsArea'); // Panel pilih skala
     const submitBtn = document.getElementById('submitBtn');
     
-    // States elements
+    // Result States
     const loading = document.getElementById('loading');
     const resultDiv = document.getElementById('result');
     const resultImage = document.getElementById('resultImage');
+    const resultActions = document.getElementById('resultActions'); // Tombol Download & Reset
     const downloadBtn = document.getElementById('downloadBtn');
     const resetBtn = document.getElementById('resetBtn');
     const errorMsg = document.getElementById('errorMsg');
 
-    // --- Event Listeners (CORE LOGIC) ---
+    // Variabel untuk menyimpan URL hasil agar bisa di-download otomatis
+    let currentResultUrl = '';
 
-    // 1. Activate hidden file input when any "Unggah gambar" button is clicked
+    // --- 1. CORE FLOW (Upload -> Full Page Editor) ---
+
     triggerButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             fileInput.click();
         });
     });
 
-    // 2. Handle File Selection
     fileInput.addEventListener('change', (e) => {
         if (fileInput.files.length) {
             handleFile(fileInput.files[0]);
@@ -44,45 +46,49 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Reset previous states
-        resetModalState();
+        // Reset state
+        resetEditorState();
 
         const reader = new FileReader();
         reader.onload = (e) => {
-            // Show preview
             imagePreview.src = e.target.result;
+            // Tampilkan elemen editor
             previewArea.style.display = 'block';
             controlsArea.style.display = 'block';
-            // Open the overlay modal
+            
+            // Buka Overlay Full Screen
             uploadOverlay.classList.remove('hidden');
         };
         reader.readAsDataURL(file);
     }
 
-    // Close Overlay
-    closeOverlayBtn.addEventListener('click', () => {
+    // Tombol Kembali (Close Editor)
+    closeOverlayBtn.addEventListener('click', (e) => {
+        e.preventDefault();
         uploadOverlay.classList.add('hidden');
-        fileInput.value = ''; // Clear input
+        fileInput.value = ''; 
     });
 
-    // Reset Button (Upload Lainnya)
+    // Tombol Edit Foto Lain (Reset)
     resetBtn.addEventListener('click', () => {
-        resetModalState();
+        resetEditorState();
         fileInput.click();
     });
 
-    function resetModalState() {
+    function resetEditorState() {
         previewArea.style.display = 'none';
         controlsArea.style.display = 'none';
+        
         loading.classList.add('hidden');
         resultDiv.classList.add('hidden');
+        resultActions.classList.add('hidden');
         errorMsg.classList.add('hidden');
+        
         submitBtn.disabled = false;
-        // Hapus atribut download saat reset agar bersih
-        downloadBtn.removeAttribute('download');
+        currentResultUrl = '';
     }
 
-    // --- Handle Form Submit (BACKEND RESTORED + AUTO DOWNLOAD ADDED) ---
+    // --- 2. BACKEND INTERACTION (Strictly Preserved) ---
     uploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -93,14 +99,14 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('image', file);
         formData.append('scale', document.getElementById('scale').value);
 
-        // UI Updates during process
+        // UI Updates: Sembunyikan kontrol, munculkan loading
         submitBtn.disabled = true;
-        controlsArea.style.display = 'none'; // Hide controls during processing
+        controlsArea.style.display = 'none';
         loading.classList.remove('hidden');
         errorMsg.classList.add('hidden');
 
         try {
-            // --- KODE BACKEND ASLI (RESTORED) ---
+            // --- KODE BACKEND ASLI ---
             const response = await fetch('/api/upscale', {
                 method: 'POST',
                 body: formData
@@ -110,33 +116,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!data.success) throw new Error(data.error || 'Gagal memproses gambar.');
 
-            // Show Success Result
+            // Sukses
+            currentResultUrl = data.url; // Simpan URL
             resultImage.src = data.url;
-            downloadBtn.href = data.url;
-
-            // --- UPDATE: AUTO DOWNLOAD LOGIC ---
-            // Menambahkan atribut 'download' agar browser otomatis mengunduh saat diklik
-            // Nama file diberi timestamp agar unik
-            const fileName = `pixelcut-hd-${new Date().getTime()}.png`;
-            downloadBtn.setAttribute('download', fileName);
             
+            // Sembunyikan preview asli, tampilkan hasil
+            previewArea.style.display = 'none';
             resultDiv.classList.remove('hidden');
+            
+            // Tampilkan tombol aksi (Download)
+            resultActions.classList.remove('hidden');
 
         } catch (error) {
-            // Show Error
             errorMsg.textContent = error.message;
             errorMsg.classList.remove('hidden');
-            controlsArea.style.display = 'block'; // Show controls again to retry
+            controlsArea.style.display = 'block'; // Tampilkan kontrol lagi untuk coba ulang
+            previewArea.style.display = 'block';
         } finally {
             loading.classList.add('hidden');
             submitBtn.disabled = false;
         }
     });
 
+    // --- 3. AUTO DOWNLOAD LOGIC (FORCE DOWNLOAD FIX) ---
+    downloadBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        
+        if (!currentResultUrl) return;
 
-    // --- 3. COMPARISON SLIDER LOGIC (FITUR VISUAL BARU) ---
-    // Logika ini untuk menggeser garis before-after pada halaman utama
-    
+        const originalText = downloadBtn.textContent;
+        downloadBtn.textContent = "Mengunduh...";
+        downloadBtn.disabled = true;
+
+        try {
+            // Teknik Force Download:
+            // 1. Fetch ulang gambar sebagai Blob (Binary Large Object)
+            // Ini mengatasi masalah cross-origin atau browser yang hanya membuka tab baru
+            const response = await fetch(currentResultUrl);
+            const blob = await response.blob();
+            
+            // 2. Buat URL objek sementara dari blob
+            const blobUrl = window.URL.createObjectURL(blob);
+            
+            // 3. Buat elemen anchor <a> tersembunyi
+            const tempLink = document.createElement('a');
+            tempLink.href = blobUrl;
+            
+            // Buat nama file unik
+            const fileName = `pixelcut-hd-${new Date().getTime()}.png`;
+            tempLink.setAttribute('download', fileName);
+            
+            // 4. Klik link secara programatis
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            
+            // 5. Bersihkan
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(blobUrl);
+
+        } catch (err) {
+            console.error("Download failed:", err);
+            alert("Gagal mengunduh otomatis. Gambar akan dibuka di tab baru.");
+            window.open(currentResultUrl, '_blank');
+        } finally {
+            downloadBtn.textContent = originalText;
+            downloadBtn.disabled = false;
+        }
+    });
+
+    // --- 4. SLIDER LOGIC (Home Page) ---
     const sliderContainer = document.getElementById('comparisonSlider');
     const beforeWrapper = document.getElementById('beforeWrapper');
     const handle = document.getElementById('scrollerHandle');
@@ -157,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
             handle.style.left = percentage + "%";
         };
 
-        // Mouse Events
         sliderContainer.addEventListener('mousedown', () => isDragging = true);
         window.addEventListener('mouseup', () => isDragging = false);
         sliderContainer.addEventListener('mousemove', (e) => {
@@ -165,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
             moveSlider(e.clientX);
         });
 
-        // Touch Events (Mobile)
         sliderContainer.addEventListener('touchstart', (e) => {
             isDragging = true;
             moveSlider(e.touches[0].clientX);
