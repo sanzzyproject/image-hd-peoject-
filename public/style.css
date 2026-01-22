@@ -1,7 +1,9 @@
+/* --- PERBAIKAN UTAMA PADA STYLE.CSS --- */
+
 :root {
-    --primary-color: #5865F2; /* Warna Biru/Ungu PicWish */
+    --primary-color: #5865F2; 
     --primary-gradient: linear-gradient(90deg, #4A72FF 0%, #7B4DFF 100%);
-    --bg-light: #F8F9FE; /* Background agak kebiruan sangat muda */
+    --bg-light: #F8F9FE;
     --bg-white: #FFFFFF;
     --text-dark: #1F2937;
     --text-grey: #6B7280;
@@ -30,7 +32,7 @@ a { text-decoration: none; color: var(--primary-color); }
 
 .container {
     width: 100%;
-    max-width: 600px; /* Fokus mobile layout seperti referensi */
+    max-width: 600px;
     margin: 0 auto;
     padding: 0 var(--container-padding);
 }
@@ -71,11 +73,11 @@ a { text-decoration: none; color: var(--primary-color); }
 .btn-block { width: 100%; display: flex; }
 .btn-lg { width: 100%; font-size: 1.1rem; padding: 16px; }
 
-/* --- SIDEBAR (Mirip PicWish Mobile Menu) --- */
+/* --- SIDEBAR --- */
 .sidebar-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px); /* Efek Blur Badan */
+    backdrop-filter: blur(8px);
     z-index: 998;
     opacity: 0; visibility: hidden;
     transition: all 0.3s ease;
@@ -99,7 +101,7 @@ a { text-decoration: none; color: var(--primary-color); }
     display: flex; justify-content: space-between; align-items: center;
     margin-bottom: 40px;
 }
-.sidebar-logo { width: 32px; height: 32px; filter: brightness(0) invert(1); } /* Logo putih */
+.sidebar-logo { width: 32px; height: 32px; filter: brightness(0) invert(1); }
 .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; }
 .close-sidebar-btn { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; }
 
@@ -132,29 +134,32 @@ a { text-decoration: none; color: var(--primary-color); }
     text-align: center;
     padding-top: 30px;
     padding-bottom: 50px;
-    /* Gradient Background Effect */
     background: radial-gradient(circle at 50% 10%, rgba(88, 101, 242, 0.08) 0%, rgba(255,255,255,0) 70%);
 }
 .ai-badge { margin-bottom: 16px; }
 .ai-badge img { width: 40px; }
 
-.hero-section h1 {
-    font-size: 2.5rem;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    color: #111;
-}
+.hero-section h1 { font-size: 2.5rem; line-height: 1.2; margin-bottom: 16px; color: #111; }
 .highlight-text { color: var(--primary-color); }
 .hero-desc { font-size: 1rem; color: var(--text-grey); margin-bottom: 30px; }
 
+/* FIX: Image Sizing Wrapper */
 .hero-image-wrapper {
     margin-top: 20px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
     position: relative;
+    width: 100%; /* Pastikan tidak lebih dari container */
 }
-.main-banner-img { width: 100%; display: block; }
+
+/* FIX: Agar gambar banner responsif dan tidak pecah */
+.main-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 .slider-hint-icon {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 40px; height: 40px; border: 2px solid white; border-radius: 50%;
@@ -163,11 +168,12 @@ a { text-decoration: none; color: var(--primary-color); }
 }
 .slider-hint-icon svg { width: 20px; height: 20px; }
 
-/* --- FEATURE SPLIT (Anime Girl) --- */
+/* --- FEATURE SPLIT --- */
 .feature-split-section { padding: 40px 0; background: var(--bg-white); }
 .feature-card { text-align: center; }
 .image-process-flow { margin-bottom: 24px; }
-.process-img { width: 100%; border-radius: 24px; }
+/* FIX: Agar gambar fitur responsif */
+.process-img { width: 100%; height: auto; border-radius: 24px; }
 
 .purple-text {
     color: transparent;
@@ -187,26 +193,17 @@ a { text-decoration: none; color: var(--primary-color); }
 /* --- STATS SECTION --- */
 .stats-section { padding: 20px 0 60px 0; background: var(--bg-white); }
 .stats-card {
-    background: white;
-    border-radius: 24px;
-    padding: 30px;
+    background: white; border-radius: 24px; padding: 30px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    text-align: center;
-    border: 1px solid #f0f0f0;
+    position: relative; display: flex; flex-direction: column;
+    gap: 24px; text-align: center; border: 1px solid #f0f0f0;
 }
-.thumbs-up-decoration {
-    position: absolute; top: -25px; left: 20px;
-    transform: rotate(-10deg);
-}
+.thumbs-up-decoration { position: absolute; top: -25px; left: 20px; transform: rotate(-10deg); }
 .stat-number { font-size: 2.5rem; font-weight: 700; color: #111; line-height: 1; }
 .stat-number small { font-size: 1.2rem; }
 .stat-label { color: #888; font-size: 0.9rem; margin-top: 4px; }
 
-/* --- INFO/SEO SECTION --- */
+/* --- INFO SECTION --- */
 .info-section { padding: 40px 0; text-align: center; background: #F5F7FF; }
 .center-icon { margin-bottom: 16px; }
 .center-icon img { width: 40px; }
@@ -215,32 +212,48 @@ a { text-decoration: none; color: var(--primary-color); }
 .info-text { font-size: 0.95rem; color: #555; text-align: justify; text-align-last: center; }
 
 /* --- FOOTER --- */
-footer {
-    text-align: center; padding: 40px 0;
-    font-size: 0.9rem; color: #888;
-    background: #F5F7FF;
-}
+footer { text-align: center; padding: 40px 0; font-size: 0.9rem; color: #888; background: #F5F7FF; }
 footer strong { color: #555; }
 .legal { font-size: 0.8rem; margin-top: 10px; opacity: 0.7; }
 
-/* --- UPLOAD MODAL (Functional) --- */
+/* --- UPLOAD MODAL (FIXED SIZE) --- */
 .hidden { display: none !important; }
+
 .upload-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(5px);
     display: flex; align-items: flex-end; justify-content: center;
+    z-index: 9999; /* Z-Index tinggi agar tidak tertutup */
 }
+
 .upload-modal {
     background: white; width: 100%; border-radius: 24px 24px 0 0;
     padding: 24px; max-width: 500px; position: relative;
-    max-height: 85vh; overflow-y: auto;
+    max-height: 90vh; /* Batasi tinggi modal */
+    overflow-y: auto; /* Scroll jika konten terlalu panjang */
+    display: flex; flex-direction: column;
 }
+
 .close-btn {
-    position: absolute; right: 20px; top: 20px;
+    position: absolute; right: 20px; top: 20px; z-index: 10;
     background: #f0f0f0; border-radius: 50%; width: 32px; height: 32px;
     border: none; cursor: pointer; font-weight: bold;
 }
-.preview-area img, .result-img-wrapper img { width: 100%; border-radius: 12px; margin-bottom: 15px; }
+
+/* FIX: Batasi ukuran gambar preview agar tidak meledak */
+.preview-area img, .result-img-wrapper img {
+    width: 100%;
+    height: auto;
+    max-height: 50vh; /* Maksimal tinggi setengah layar */
+    object-fit: contain; /* Agar gambar pas dan tidak gepeng */
+    border-radius: 12px;
+    margin-bottom: 15px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 select {
     width: 100%; padding: 12px; border-radius: 12px;
     border: 1px solid #ddd; margin-top: 5px; font-size: 1rem;
@@ -253,7 +266,7 @@ select {
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 .error { color: red; background: #ffe6e6; padding: 10px; border-radius: 8px; font-size: 0.9rem; margin-top: 10px; }
 
-/* Responsive Desktop Tweak (Agar tetap rapi di layar lebar walaupun desain mobile-first) */
+/* Desktop adjustments */
 @media (min-width: 768px) {
     .container { max-width: 900px; }
     .hero-section { display: flex; align-items: center; text-align: left; gap: 40px; padding: 80px 20px; }
@@ -267,4 +280,3 @@ select {
     .stats-card { flex-direction: row; justify-content: space-around; padding: 40px; }
     .upload-modal { border-radius: 20px; margin-bottom: auto; align-self: center; }
 }
-
