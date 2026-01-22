@@ -2,64 +2,200 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Upscaler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Penjernih Foto AI Gratis - Jadikan Foto HD</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>AI Super Resolution</h1>
-            <p>Tingkatkan kualitas foto Anda dengan teknologi AI.</p>
-        </header>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">Pixelcut</div>
+            <button class="menu-toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+    </nav>
 
-        <main class="card">
-            <form id="uploadForm">
-                <div class="drop-zone" id="dropZone">
-                    <span class="icon">📁</span>
-                    <p>Drag & Drop foto di sini atau <strong>Klik untuk Upload</strong></p>
-                    <input type="file" name="image" id="fileInput" accept="image/jpeg, image/png, image/jpg" hidden>
+    <main>
+        <section class="hero-section container">
+            <div class="hero-content">
+                <h1>Penjernih Foto Gratis untuk Jadikan Foto HD</h1>
+                <p class="sub-headline">Penjernih foto gratis untuk ubah foto jadi HD. Tingkatkan resolusi foto dengan mudah dan cepat menggunakan alat online kami!</p>
+                
+                <ul class="feature-list">
+                    <li><span class="check-icon">✓</span> Unduh HD Gratis</li>
+                    <li><span class="check-icon">✓</span> Tanpa watermark</li>
+                </ul>
+
+                <button class="btn btn-primary btn-lg trigger-upload-btn">Unggah gambar</button>
+
+                <div class="no-photo-section">
+                    <span>Tidak punya foto?</span> <span class="text-muted">Cobalah salah satunya</span>
+                    <div class="sample-thumbs">
+                        <img src="https://source.unsplash.com/random/50x50?architecture" alt="Sample 1">
+                        <img src="https://source.unsplash.com/random/50x50?portrait" alt="Sample 2">
+                        <img src="https://source.unsplash.com/random/50x50?car" alt="Sample 3">
+                    </div>
                 </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=1000&auto=format&fit=crop" alt="Hero Image Example">
+            </div>
+        </section>
+
+        <section class="stats-bar container">
+            <div class="stat-item">
+                <span class="icon">☺</span> Dipercaya oleh 70 juta orang
+            </div>
+            <div class="stat-item">
+                <span class="stars">★★★★★</span> 171.800 Ulasan
+            </div>
+            <div class="stat-item">
+                <span class="icon">&lt;/&gt;</span> API untuk pengembang
+            </div>
+            <div class="stat-item">
+                <span class="icon">📱</span> Tersedia di iPhone & Android
+            </div>
+        </section>
+
+        <section class="steps-section">
+            <div class="container">
+                <h2>Cara meningkatkan kualitas foto</h2>
+                <div class="step-card">
+                    <div class="step-header">
+                        <span class="step-number">1</span> Pilih Foto
+                    </div>
+                    <p>Klik atau seret foto yang ingin diubah. Mendukung format JPG, PNG, dan HEIC.</p>
+                </div>
+                </div>
+        </section>
+
+        <section class="comparison-section container">
+            <h2>Penjernih Foto AI Online</h2>
+            
+            <div class="comparison-slider-wrapper">
+                <div class="comparison-slider">
+                    <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=1000&auto=format&fit=crop" alt="After" class="after-img">
+                    <div class="before-img-wrapper">
+                       <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=20&w=1000&auto=format&fit=crop&blur=50" alt="Before" class="before-img">
+                         <span class="label label-before">Sebelum</span>
+                    </div>
+                     <span class="label label-after">Setelah</span>
+                    <div class="scroller-handle"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left"><polyline points="15 18 9 12 15 6"/></svg><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"/></svg></div>
+                </div>
+            </div>
+
+            <div class="comparison-text">
+                <p>Pixelcut adalah penjernih foto AI online terbaik. Unggah foto Anda, dan biarkan AI bekerja. Penjernih foto akan meningkatkan kualitas foto Anda hingga 4 kali lebih baik dengan menambahkan piksel pada foto Anda.</p>
+                <p>Pertama, pilih foto dengan format JPEG, PNG, atau HEIC. Kemudian pilih peningkatan resolusi yang diinginkan, dan alat penjernih foto kami akan mengubah foto buram Anda menjadi foto HD hanya dalam hitungan detik! Lihatlah perbedaan yang dibuat oleh penjernih foto kami!</p>
+            </div>
+             <button class="btn btn-primary btn-lg trigger-upload-btn" style="margin-top: 2rem;">Unggah gambar</button>
+        </section>
+
+        <section class="testimonials-section container">
+            <h2>Pixelcut disukai oleh lebih dari 2 juta orang</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <h3>Aplikasi favorit saya</h3>
+                    <p>Aplikasi bagus, mudah digunakan. Membantu bisnis kecil kami menghemat waktu dan uang untuk membuat materi pemasaran yang berbeda secara profesional. Terima kasih.</p>
+                    <span class="author">Shaelyn D.</span>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <h3>Penghapus latar belakang terbaik</h3>
+                    <p>Saya memerlukan penghapus latar belakang yang bagus untuk pekerjaan saya dan rasanya saya sudah melalui semuanya. Yang ini adalah yang terbaik sejauh ini. Sangat mudah digunakan dan hasilnya selalu terlihat luar biasa. Terima kasih Pixelcut!</p>
+                    <span class="author">Kira H.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <h3>Sumber daya</h3>
+                <ul>
+                    <li><a href="#">Afiliasi</a></li>
+                    <li><a href="#">Use Cases</a></li>
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Dokumen API</a></li>
+                    <li><a href="#">Merek</a></li>
+                    <li><a href="#">Ketentuan</a></li>
+                    <li><a href="#">Ketentuan API</a></li>
+                    <li><a href="#">Privasi</a></li>
+                    <li><a href="#">Preferensi Kue</a></li>
+                    <li><a href="#">Apa yang Baru</a></li>
+                    <li><a href="#">llms.txt</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Tetap berhubungan</h3>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">X</a></li>
+                    <li><a href="#">Hubungi kami</a></li>
+                </ul>
+            </div>
+            
+            <div class="language-selector">
+                🌐 Bahasa Indonesia ⌄
+            </div>
+
+            <div class="copyright">
+                © 2026 Pixelcut. Semua hak dilindungi.
+            </div>
+        </div>
+    </footer>
+
+    <div class="sticky-bottom-cta">
+        <button class="btn btn-primary btn-block trigger-upload-btn">Unggah gambar</button>
+    </div>
+
+
+    <div id="uploadOverlay" class="upload-overlay hidden">
+        <div class="upload-modal">
+            <button id="closeOverlayBtn" class="close-btn">✕</button>
+            
+            <form id="uploadForm">
+                <input type="file" name="image" id="fileInput" accept="image/jpeg, image/png, image/jpg" hidden>
 
                 <div class="preview-area" id="previewArea" style="display: none;">
                     <img id="imagePreview" src="" alt="Preview">
-                    <button type="button" class="remove-btn" id="removeBtn">Hapus</button>
                 </div>
 
-                <div class="controls">
+                <div class="controls" id="controlsArea" style="display: none;">
                     <label for="scale">Skala Pembesaran:</label>
                     <select id="scale" name="scale">
                         <option value="4">4x (Rekomendasi)</option>
                         <option value="8">8x (Ultra HD)</option>
                         <option value="16">16x (Extreme)</option>
                     </select>
+                    <button type="submit" id="submitBtn" class="btn btn-primary btn-block" style="margin-top: 1rem;">Mulai Upscale ✨</button>
                 </div>
 
-                <button type="submit" id="submitBtn" disabled>Mulai Upscale ✨</button>
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>Sedang memproses... (10-30 detik)</p>
+                </div>
+
+                <div id="result" class="result hidden">
+                    <h3>Hasil Upscale:</h3>
+                    <div class="result-img-wrapper">
+                        <img id="resultImage" src="" alt="Upscaled Image">
+                    </div>
+                    <a id="downloadBtn" href="#" target="_blank" class="btn btn-success btn-block">Download Full HD</a>
+                     <button type="button" id="resetBtn" class="btn btn-text btn-block" style="margin-top: 0.5rem;">Unggah Lainnya</button>
+                </div>
+
+                <div id="errorMsg" class="error hidden"></div>
             </form>
-
-            <div id="loading" class="loading hidden">
-                <div class="spinner"></div>
-                <p>Sedang memproses... (10-30 detik)</p>
-            </div>
-
-            <div id="result" class="result hidden">
-                <h3>Hasil Upscale:</h3>
-                <div class="result-img-wrapper">
-                    <img id="resultImage" src="" alt="Upscaled Image">
-                </div>
-                <a id="downloadBtn" href="#" target="_blank" class="download-btn">Download Full HD</a>
-            </div>
-
-            <div id="errorMsg" class="error hidden"></div>
-        </main>
-
-        <footer>
-            <p>&copy; 2024 AI Upscaler. Powered by Supawork Engine.</p>
-        </footer>
+        </div>
     </div>
+
 
     <script src="script.js"></script>
 </body>
