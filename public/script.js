@@ -1,65 +1,88 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const dropZone = document.getElementById('dropZone');
+    // --- Elements ---
+    // Trigger buttons (bisa ada banyak di halaman)
+    const triggerButtons = document.querySelectorAll('.trigger-upload-btn');
     const fileInput = document.getElementById('fileInput');
+    
+    // Overlay & Modal elements
+    const uploadOverlay = document.getElementById('uploadOverlay');
+    const closeOverlayBtn = document.getElementById('closeOverlayBtn');
+    const uploadForm = document.getElementById('uploadForm');
+    
+    // Inside Modal elements
     const previewArea = document.getElementById('previewArea');
     const imagePreview = document.getElementById('imagePreview');
-    const removeBtn = document.getElementById('removeBtn');
+    const controlsArea = document.getElementById('controlsArea');
     const submitBtn = document.getElementById('submitBtn');
-    const uploadForm = document.getElementById('uploadForm');
+    
+    // States elements
     const loading = document.getElementById('loading');
     const resultDiv = document.getElementById('result');
     const resultImage = document.getElementById('resultImage');
     const downloadBtn = document.getElementById('downloadBtn');
+    const resetBtn = document.getElementById('resetBtn');
     const errorMsg = document.getElementById('errorMsg');
 
-    // Handle Drag & Drop
-    dropZone.addEventListener('click', () => fileInput.click());
-    
-    dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('dragover');
+    // --- Event Listeners ---
+
+    // 1. Activate hidden file input when any "Unggah gambar" button is clicked
+    triggerButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            fileInput.click();
+        });
     });
 
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        if (e.dataTransfer.files.length) {
-            handleFile(e.dataTransfer.files[0]);
-        }
-    });
-
+    // 2. Handle File Selection
     fileInput.addEventListener('change', (e) => {
-        if (fileInput.files.length) handleFile(fileInput.files[0]);
+        if (fileInput.files.length) {
+            handleFile(fileInput.files[0]);
+        }
     });
 
     function handleFile(file) {
         if (!file.type.startsWith('image/')) {
-            alert('Harap upload file gambar.');
+            alert('Harap upload file gambar (JPG, PNG, HEIC).');
             return;
         }
 
+        // Reset previous states
+        resetModalState();
+
         const reader = new FileReader();
         reader.onload = (e) => {
+            // Show preview
             imagePreview.src = e.target.result;
-            dropZone.style.display = 'none';
             previewArea.style.display = 'block';
-            submitBtn.disabled = false;
+            controlsArea.style.display = 'block';
+            // Open the overlay modal
+            uploadOverlay.classList.remove('hidden');
         };
         reader.readAsDataURL(file);
     }
 
-    removeBtn.addEventListener('click', () => {
-        fileInput.value = '';
-        dropZone.style.display = 'block';
-        previewArea.style.display = 'none';
-        submitBtn.disabled = true;
-        resultDiv.classList.add('hidden');
-        errorMsg.classList.add('hidden');
+    // Close Overlay
+    closeOverlayBtn.addEventListener('click', () => {
+        uploadOverlay.classList.add('hidden');
+        fileInput.value = ''; // Clear input
     });
 
-    // Handle Submit
+    // Reset Button (Upload Lainnya)
+    resetBtn.addEventListener('click', () => {
+        resetModalState();
+        fileInput.click();
+    });
+
+
+    function resetModalState() {
+        previewArea.style.display = 'none';
+        controlsArea.style.display = 'none';
+        loading.classList.add('hidden');
+        resultDiv.classList.add('hidden');
+        errorMsg.classList.add('hidden');
+        submitBtn.disabled = false;
+    }
+
+    // --- Handle Form Submit (Backend Interaction - Core Logic Unchanged) ---
     uploadForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -70,13 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('image', file);
         formData.append('scale', document.getElementById('scale').value);
 
-        // UI Updates
+        // UI Updates during process
         submitBtn.disabled = true;
+        controlsArea.style.display = 'none'; // Hide controls during processing
         loading.classList.remove('hidden');
-        resultDiv.classList.add('hidden');
         errorMsg.classList.add('hidden');
 
         try {
+            // Call existing backend API
             const response = await fetch('/api/upscale', {
                 method: 'POST',
                 body: formData
@@ -86,13 +110,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!data.success) throw new Error(data.error || 'Gagal memproses gambar.');
 
+            // Show Success Result
             resultImage.src = data.url;
             downloadBtn.href = data.url;
             resultDiv.classList.remove('hidden');
 
         } catch (error) {
+            // Show Error
             errorMsg.textContent = error.message;
             errorMsg.classList.remove('hidden');
+            controlsArea.style.display = 'block'; // Show controls again to retry
         } finally {
             loading.classList.add('hidden');
             submitBtn.disabled = false;
