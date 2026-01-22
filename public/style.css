@@ -1,11 +1,11 @@
 :root {
-    /* Color Palette based on reference images */
-    --primary-blue: #007BFF; /* Biru cerah dari tombol */
+    /* Color Palette */
+    --primary-blue: #007BFF;
     --primary-blue-hover: #0069d9;
-    --bg-color: #FDFBF7; /* Warna latar belakang "putih tua"/krem */
+    --bg-color: #FDFBF7;
     --bg-white: #FFFFFF;
-    --text-dark: #111827; /* Hampir hitam */
-    --text-muted: #6B7280; /* Abu-abu */
+    --text-dark: #111827;
+    --text-muted: #6B7280;
     --border-color: #E5E7EB;
     --success-green: #10B981;
 
@@ -13,304 +13,142 @@
     --container-padding: 20px;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+* { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-white);
     color: var(--text-dark);
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 80px; /* Space for sticky footer on mobile */
+    padding-bottom: 80px;
 }
 
 /* Utilities */
-.container {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding-left: var(--container-padding);
-    padding-right: var(--container-padding);
-}
-
+.container { width: 100%; max-width: 1100px; margin: 0 auto; padding-left: var(--container-padding); padding-right: var(--container-padding); }
 .hidden { display: none !important; }
-
-.btn {
-    display: inline-block;
-    font-weight: 600;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 999px; /* Rounded pills */
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: var(--primary-blue);
-    border-color: var(--primary-blue);
-}
+.btn { display: inline-block; font-weight: 600; text-align: center; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 999px; transition: all 0.2s; cursor: pointer; text-decoration: none; border: 1px solid transparent; }
+.btn-primary { color: #fff; background-color: var(--primary-blue); }
 .btn-primary:hover { background-color: var(--primary-blue-hover); }
-
-.btn-success {
-    color: #fff;
-    background-color: var(--success-green);
-}
-
-.btn-text {
-    background: none; color: var(--text-muted);
-}
-
 .btn-lg { padding: 1rem 2rem; font-size: 1.125rem; width: 100%; }
 .btn-block { display: block; width: 100%; }
+.icon-btn { background: none; border: none; cursor: pointer; color: var(--text-dark); padding: 8px; }
 
 h1, h2, h3 { font-weight: 700; letter-spacing: -0.025em; }
 h1 { font-size: 2.25rem; line-height: 1.2; margin-bottom: 1rem; }
 h2 { font-size: 1.875rem; margin-bottom: 1.5rem; text-align: center; }
 
-/* --- Navbar --- */
-.navbar {
-    padding: 1rem 0;
-    background: var(--bg-white);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+/* Navbar & Hero (No major changes) */
+.navbar { padding: 1rem 0; background: var(--bg-white); position: sticky; top: 0; z-index: 100; }
 .nav-container { display: flex; justify-content: space-between; align-items: center; }
 .logo { font-weight: 700; font-size: 1.25rem; }
 .menu-toggle { background: none; border: none; cursor: pointer; color: var(--text-dark); }
-
-/* --- Hero Section --- */
-.hero-section {
-    padding-top: 2rem;
-    padding-bottom: var(--section-spacing);
-    text-align: center;
-}
+.hero-section { padding-top: 2rem; padding-bottom: var(--section-spacing); text-align: center; }
 .sub-headline { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-.feature-list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    color: var(--text-dark);
-    font-weight: 500;
-}
+.feature-list { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 2rem; font-weight: 500; }
 .check-icon { color: var(--success-green); margin-right: 0.5rem; }
-.hero-image { margin-top: 2rem; }
-.hero-image img { width: 100%; border-radius: 16px; }
-
-.no-photo-section {
-    margin-top: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    flex-wrap: wrap;
-}
+.hero-image { margin-top: 2rem; } .hero-image img { width: 100%; border-radius: 16px; }
+.no-photo-section { margin-top: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.875rem; flex-wrap: wrap; }
 .text-muted { color: var(--text-muted); }
-.sample-thumbs { display: flex; gap: 0.5rem; margin-left: 0.5rem; }
-.sample-thumbs img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; }
+.sample-thumbs { display: flex; gap: 0.5rem; margin-left: 0.5rem; } .sample-thumbs img { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; }
+.stats-bar { display: flex; flex-direction: column; gap: 1rem; padding-bottom: var(--section-spacing); font-weight: 500; }
+.stat-item { display: flex; align-items: center; gap: 0.5rem; } .stat-item .stars { color: #FBBF24; }
 
-/* --- Stats Bar --- */
-.stats-bar {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding-bottom: var(--section-spacing);
-    font-weight: 500;
-}
-.stat-item { display: flex; align-items: center; gap: 0.5rem; }
-.stat-item .stars { color: #FBBF24; /* Amber/Yellow */ }
-
-/* --- Steps Section (Blue BG) --- */
-.steps-section {
-    background-color: var(--primary-blue);
-    color: white;
-    padding: var(--section-spacing) 0;
-    text-align: center;
-}
+/* --- Steps Section (Updated Spacing) --- */
+.steps-section { background-color: var(--primary-blue); color: white; padding: var(--section-spacing) 0; }
 .steps-section h2 { color: white; margin-bottom: 2.5rem; }
-.step-card {
-    background: rgba(255,255,255,0.1);
-    border-radius: 16px;
-    padding: 2rem;
-    text-align: left;
-    max-width: 400px;
-    margin: 0 auto;
-}
+.steps-grid { display: grid; gap: 1.5rem; }
+.step-card { background: rgba(255,255,255,0.1); border-radius: 16px; padding: 2rem; text-align: left; }
 .step-header { display: flex; align-items: center; font-weight: 700; font-size: 1.25rem; margin-bottom: 1rem; }
-.step-number {
-    background: white; color: var(--primary-blue);
-    width: 32px; height: 32px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-right: 1rem;
-}
-.step-card p { color: rgba(255,255,255,0.9); }
+.step-number { background: white; color: var(--primary-blue); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1rem; flex-shrink: 0; }
+.step-card p { color: rgba(255,255,255,0.9); margin-bottom: 0.5rem; /* Fix Text Mepet */ }
 
-/* --- Comparison Section --- */
+/* --- Comparison Section (Updated Spacing) --- */
 .comparison-section { padding: var(--section-spacing) 0; }
 .comparison-text { font-size: 1rem; color: var(--text-muted); margin-top: 2rem; text-align: left; }
-.comparison-text p { margin-bottom: 1rem; }
+/* Fix Text Mepet: Add margin between paragraphs */
+.text-spaced p { margin-bottom: 1.5rem; } 
 
-/* Simple Before/After CSS Implementation */
-.comparison-slider-wrapper {
-    position: relative;
-    width: 100%;
-    border-radius: 16px;
-    overflow: hidden;
-    /* Aspect ratio trick for banner shape */
-    aspect-ratio: 4/3; 
-}
-.comparison-slider {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.comparison-slider img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-}
-.before-img-wrapper {
-    position: absolute;
-    top: 0; left: 0; height: 100%;
-    width: 50%; /* Start at 50% */
-    overflow: hidden;
-    border-right: 2px solid white;
-    z-index: 2;
-}
-.before-img-wrapper img {
-    /* Important: counteract the wrapper's width to keep image scaling correct */
-    width: 200%; 
-    max-width: unset;
-}
-.label {
-    position: absolute;
-    background: rgba(0,0,0,0.6); color: white;
-    padding: 0.25rem 0.75rem; border-radius: 4px;
-    font-size: 0.875rem; font-weight: 600;
-    top: 1rem;
-}
-.label-before { left: 1rem; z-index: 3; }
-.label-after { right: 1rem; z-index: 1; }
-.scroller-handle {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px; height: 40px;
-    background: white; border-radius: 50%;
-    z-index: 4;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--primary-blue);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    /* In a real implementation, this would be draggable via JS */
-}
+/* General Comparison Slider Styles */
+.comparison-slider-wrapper { position: relative; width: 100%; border-radius: 16px; overflow: hidden; }
+.landing-slider { aspect-ratio: 4/3; } /* Aspect ratio for landing page only */
+.comparison-slider { position: relative; width: 100%; height: 100%; }
+.comparison-slider img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.before-img-wrapper { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; border-right: 2px solid white; z-index: 2; }
+.before-img-wrapper img { width: 200%; max-width: unset; }
+.label { position: absolute; background: rgba(0,0,0,0.6); color: white; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.875rem; font-weight: 600; top: 1rem; }
+.label-before { left: 1rem; z-index: 3; } .label-after { right: 1rem; z-index: 1; }
+.scroller-handle { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: white; border-radius: 50%; z-index: 4; display: flex; align-items: center; justify-content: center; color: var(--primary-blue); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
 
-/* --- Testimonials Section --- */
+/* Testimonials & Footer (No major changes) */
 .testimonials-section { padding: var(--section-spacing) 0; background-color: var(--bg-color); }
 .testimonial-grid { display: grid; gap: 1.5rem; }
-.testimonial-card {
-    background: var(--bg-white);
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-}
+.testimonial-card { background: var(--bg-white); padding: 2rem; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
 .testimonial-card .stars { color: #FBBF24; margin-bottom: 1rem; }
 .testimonial-card h3 { font-size: 1.125rem; margin-bottom: 0.75rem; text-align: left; }
 .testimonial-card p { color: var(--text-muted); margin-bottom: 1.5rem; }
 .testimonial-card .author { font-weight: 600; }
-
-/* --- Footer --- */
 footer { padding: 4rem 0 2rem; background: var(--bg-white); font-size: 0.875rem; color: var(--text-muted); }
 .footer-links h3, .footer-social h3 { color: var(--text-dark); font-size: 1rem; margin-bottom: 1.5rem; }
-footer ul { list-style: none; margin-bottom: 3rem; }
-footer li { margin-bottom: 1rem; }
-footer a { color: var(--text-muted); text-decoration: none; }
-footer a:hover { color: var(--text-dark); }
-.language-selector { margin-bottom: 2rem; display: inline-block; cursor: pointer; }
+footer ul { list-style: none; margin-bottom: 3rem; } footer li { margin-bottom: 1rem; } footer a { color: var(--text-muted); text-decoration: none; }
+.sticky-bottom-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem var(--container-padding); background: var(--bg-white); border-top: 1px solid var(--border-color); z-index: 90; }
 
-/* --- Sticky Bottom CTA --- */
-.sticky-bottom-cta {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    padding: 1rem var(--container-padding);
-    background: var(--bg-white);
-    border-top: 1px solid var(--border-color);
-    z-index: 90;
-}
+/* --- NEW EDITOR MODAL STYLES --- */
+.upload-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-white); z-index: 999; display: flex; flex-direction: column; }
+.upload-modal.editor-mode { flex: 1; display: flex; flex-direction: column; background: var(--bg-white); }
 
-/* --- UPLOAD OVERLAY STYLES (The functional part) --- */
-.upload-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.8); z-index: 999;
-    display: flex; justify-content: center; align-items: flex-end; /* Bottom sheet on mobile */
-}
-.upload-modal {
-    background: var(--bg-white);
-    width: 100%; max-width: 500px;
-    border-radius: 24px 24px 0 0;
-    padding: 2rem;
-    position: relative;
-    max-height: 90vh; overflow-y: auto;
-}
-.close-btn {
-    position: absolute; top: 1rem; right: 1rem;
-    background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);
-}
-.preview-area img { width: 100%; border-radius: 12px; margin-bottom: 1.5rem; }
-select {
-    width: 100%; padding: 0.75rem; border: 1px solid var(--border-color);
-    border-radius: 8px; margin-top: 0.5rem; font-family: inherit;
-}
-/* Loading & Result Styles (kept mostly same, just adjusted colors) */
-.loading { margin-top: 1.5rem; text-align: center; color: var(--text-muted); }
-.spinner {
-    width: 30px; height: 30px;
-    border: 3px solid rgba(0, 123, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: var(--primary-blue);
-    animation: spin 1s linear infinite;
-    margin: 0 auto 10px;
-}
+/* 1. Editor Header */
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem var(--container-padding); border-bottom: 1px solid var(--border-color); }
+.modal-header h3 { margin: 0; font-size: 1.125rem; }
+
+/* 2. Editor Content & Comparison */
+.editor-content { flex: 1; display: flex; flex-direction: column; }
+.editor-comparison-wrapper { flex: 1; position: relative; background: #f0f0f0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.editor-comparison-wrapper .comparison-slider { width: auto; height: auto; max-width: 100%; max-height: 100%; }
+.editor-comparison-wrapper img { width: auto; height: auto; max-width: 100%; max-height: 60vh; object-fit: contain; }
+
+/* Resolution Labels in Editor */
+.res-label { position: absolute; bottom: 1rem; background: rgba(0,0,0,0.5); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 500; }
+.res-before { left: 1rem; z-index: 3; }
+.res-after { right: 1rem; z-index: 1; }
+
+/* 3. Bottom Controls */
+.bottom-controls { padding: 1.5rem var(--container-padding); background: var(--bg-white); border-top: 1px solid var(--border-color); }
+.control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-weight: 600; }
+.buttons-row { gap: 1rem; margin-bottom: 0; }
+
+/* Switch Style */
+.switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-blue); }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* Option Buttons Style */
+.option-btn { flex: 1; background: #F3F4F6; color: var(--text-dark); border: none; padding: 1rem; border-radius: 12px; font-size: 1rem; }
+.option-btn.active { background: var(--text-dark); color: white; }
+
+/* Loading & Error in Editor */
+.loading-container { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.spinner { width: 40px; height: 40px; border: 4px solid rgba(0, 123, 255, 0.2); border-top-color: var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.result h3 { margin-bottom: 1rem; text-align: center; }
-.result-img-wrapper img { width: 100%; border-radius: 12px; margin-bottom: 1rem; }
-.error { color: #dc2626; background-color: #fef2f2; padding: 0.75rem; border-radius: 8px; margin-top: 1rem; }
+.error { margin: 1rem; }
 
-
-/* --- Responsive Media Queries --- */
+/* Responsive */
 @media (min-width: 768px) {
-    .btn-lg { width: auto; padding-left: 3rem; padding-right: 3rem; }
-    .hero-section { text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-    .hero-content { flex: 1; order: 1; }
-    .hero-image { flex: 1; order: 2; margin-top: 0; }
-    .feature-list { justify-content: flex-start; }
-    .no-photo-section { justify-content: flex-start; }
-
+    .hero-section { text-align: left; display: flex; align-items: center; gap: 2rem; }
+    .hero-content, .hero-image { flex: 1; } .hero-image { margin-top: 0; }
+    .feature-list, .no-photo-section { justify-content: flex-start; }
     .stats-bar { flex-direction: row; justify-content: space-between; }
-    
+    .steps-grid { grid-template-columns: repeat(4, 1fr); } /* 4 columns for steps on desktop */
     .comparison-section { text-align: center; }
-    .comparison-text { text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; }
-    .comparison-slider-wrapper { aspect-ratio: 16/9; }
-
+    .comparison-text { text-align: center; max-width: 800px; margin: 2rem auto 0; }
+    .landing-slider { aspect-ratio: 16/9; }
     .testimonial-grid { grid-template-columns: 1fr 1fr; }
-
-    footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; }
-    .footer-links, .footer-social { margin-right: 3rem; }
-
-    body { padding-bottom: 0; }
+    footer .container { display: flex; justify-content: space-between; }
     .sticky-bottom-cta { display: none; }
-    .upload-modal { border-radius: 24px; align-self: center; } /* Center modal on desktop */
+    /* Modal on desktop */
+    .upload-overlay { align-items: center; justify-content: center; background: rgba(0,0,0,0.5); }
+    .upload-modal.editor-mode { max-width: 900px; height: 80vh; max-height: 800px; border-radius: 16px; overflow: hidden; }
+    .editor-comparison-wrapper img { max-height: 100%; } /* Allow fuller height on desktop modal */
 }
